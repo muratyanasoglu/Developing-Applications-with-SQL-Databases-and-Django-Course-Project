@@ -1,0 +1,12 @@
+<h1>{{ exam.name }}</h1>
+<form action="{% url 'exams:submit_exam' exam.id %}" method="post">
+  {% csrf_token %}
+  {% for question in exam.question_set.all %}
+    <h2>{{ question.question_text }}</h2>
+    {% for choice in question.choice_set.all %}
+      <input type="radio" id="choice{{ choice.id }}" name="choice{{ question.id }}" value="{{ choice.id }}">
+      <label for="choice{{ choice.id }}">{{ choice.choice_text }}</label><br>
+    {% endfor %}
+  {% endfor %}
+  <input type="submit" value="Submit">
+</form>
